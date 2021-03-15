@@ -1,8 +1,26 @@
 {% extends "web/base.html" %}
 {% block content %}
  
-  <h1>Welcome to Receatio </h1>
-  <body>We are to help you find activities to keep your children busy and active, search below to experience how we can help you.
-      Login and setup an account for more information</body>
+  
+  <body>
+    <h1>Welcome to Receatio </h1>
+    <p>We are to help you find activities to keep your children busy and active, search below to experience how we can help you.
+      Login and setup an account for more information</p>
+
+    {% for post in posts %}
+      <article class="media content-section">
+        <div class="media-body">
+          <div class="article-metadata">
+            <a class="mr-2" href="#">{{ post.author }}</a>
+            <small class="text-muted">{{ post.date_posted|date:"F d, Y"}}</small>
+          </div>
+          <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+          <p class="article-content">{{ post.content }}</p>
+        </div>
+      </article>
+    {% endfor %}
+  
+  
+    </body>
  
 {% endblock content %}
