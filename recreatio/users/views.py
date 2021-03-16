@@ -20,8 +20,9 @@ def register(request):
 @login_required
 def profile(request):
 
-    parent_id = request.user.id
-    parents = Child.objects.filter(parent__id = parent_id)
+    parent = request.user   #extract the current user
+    parent_id = Profile.objects.get(user_id = parent.id)    #go to the profile objects and find ID
+    parents = Child.objects.filter(parent__id = parent_id.id).order_by('first_name')   #use this ID to find my children
     
 
     if request.method == "POST":
