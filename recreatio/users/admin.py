@@ -1,8 +1,6 @@
 from django.contrib import admin
 
-from .models import Profile, Child, Organization, Activities
+from .models import Profile#, Child
 
 admin.site.register(Profile)
-admin.site.register(Child)
-admin.site.register(Organization)
-admin.site.register(Activities)
+#admin.site.register(Child)
