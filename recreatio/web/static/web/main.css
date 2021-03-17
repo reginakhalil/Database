@@ -1,5 +1,5 @@
 body {
-    background: #fafafa;
+    background: #fafafac0;
     color: #333333;
     margin-top: 5rem;
   }
@@ -13,7 +13,7 @@ ul {
   }
   
 .bg-steel {
-    background-color: #e01b84;
+    background-color: #3382af;
   }
   
 .site-header .navbar-nav .nav-link {
@@ -27,42 +27,7 @@ ul {
 .site-header .navbar-nav .nav-link.active {
     font-weight: 500;
   }
-
-.dropdown {
-  float: left;
-  overflow: hidden;
-}
-
-.dropdown .dropbtn{
-  color: #e01b84;
-  border: none;
-  outline: none;
-  padding: 14px 16px;
-  background-color: inherit;
-  font-family: inherit;
-  margin: 0;
-}
-
-.dropdown-content{
-  display: none;
-  position: absolute;
-  background-color: inherit;
-  z-index: inherit;
-}
-
-.dropdown-content a {
-  float: none;
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
-
-.dropdown:hover .dropdown-content{
-  display: block;
-}
-
+  
 .content-section {
     background: #ffffff;
     padding: 10px 20px;
@@ -117,4 +82,3 @@ a.article-title:hover {
 .account-heading {
     font-size: 2.5rem;
   }
-
