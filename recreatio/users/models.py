@@ -25,7 +25,6 @@ class Child(models.Model):
     last_name = models.CharField(max_length=30)
     birth_date = models.DateField()
     parent = models.ManyToManyField(Profile)
-#    parent = models.ManyToManyField(User)
     activity_list = models.ManyToManyField(Activities)
 # list of their acvities
 
