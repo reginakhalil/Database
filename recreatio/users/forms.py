@@ -30,9 +30,8 @@ class ProfileUpdateForm(forms.ModelForm):
 class AddChildForm(forms.ModelForm):
     class Meta:
         model = Child
-#   date time widget for BDay
         fields = ['first_name', 'last_name','birth_date','parent']
-#        widget = 
+        widgets = {'birth_date': forms.SelectDateWidget(years=range(2000,2021,1))} 
 
 class AddOrgForm(forms.ModelForm):
     class Meta:
