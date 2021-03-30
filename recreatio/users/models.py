@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import date
 import datetime
+from django.urls import reverse
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -41,8 +43,16 @@ class Activities(models.Model):
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     registrant = models.ManyToManyField(Child, blank=True)
 
-    def __str__(self):
-        return self.organization.name + " " + self.description
+    title = models.CharField(max_length = 100)
+    date_posted = models.DateTimeField(default=timezone.now)
+    author = models.ForeignKey(User, on_delete=models.CASCADE) 
+
+    def __str__(self): 
+        return self.title 
+
+    def get_absolute_url(self): 
+        return reverse('activity-detail', kwargs={'pk': self.pk})
+    
 
 
 

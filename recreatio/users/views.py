@@ -7,6 +7,58 @@ from .models import Child, Profile, Organization, Activities
 from .tables import ActivityTable
 from django_tables2 import RequestConfig
 from .filters import ActivityFilter, ActivityFilterGeneric
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+
+def home(request): 
+    context = {
+        'activities': Activities.objects.all()
+    }
+    return render(request, 'web/home.html', context)
+
+
+class ActivityListView(ListView): 
+    model = Activities
+    template_name = 'web/home.html' 
+    context_object_name = 'activities'
+    ordering = ['-date_posted'] #orders posts from newest to oldest
+
+class ActivityDetailView(DetailView): 
+    model = Activities
+
+class ActivityCreateView(LoginRequiredMixin, CreateView): 
+    model = Activities
+    fields = ['title', 'organization', 'description', 'start_date', 'end_date', 'age_group_young', 'age_group_old', 'reg_start', 'reg_end', 'max_size']
+
+
+    def form_valid(self, form): 
+        form.instance.author = self.request.user #set the author of the post to the user currently logged in 
+        return super().form_valid(form)
+
+
+class ActivityUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView): 
+    model = Activities
+    fields = ['title', 'organization', 'description', 'start_date', 'end_date', 'age_group_young', 'age_group_old', 'reg_start', 'reg_end', 'max_size']
+
+    def form_valid(self, form): 
+        form.instance.author = self.request.user #set the author of the post to the user currently logged in 
+        return super().form_valid(form)
+
+    #this function is to make sure that only the author of a post is able to make updates 
+    def test_func(self): 
+        activity = self.get_object()
+        #check if the user currenlty logged in is the author of the post
+        return self.request.user == activity.author
+
+#delete a post 
+class ActivityDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView): 
+    model = Activities
+    success_url = '/'
+   #this function is to make sure that only the author of a post is able to make updates 
+    def test_func(self): 
+        activity = self.get_object()
+        #check if the user currenlty logged in is the author of the post
+        return self.request.user == activity.author
 
 def register(request):
     if request.method == "POST":
