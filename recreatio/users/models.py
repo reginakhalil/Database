@@ -32,8 +32,8 @@ class Child(models.Model):
         return self.first_name + " " + self.last_name
 
 class Activities(models.Model):
-    start_date = models.DateField(default=date.today)
-    end_date = models.DateField(default=date.today)
+    start_date = models.DateField(verbose_name="Start Date (YYYY-MM-DD)")
+    end_date = models.DateField(verbose_name="End Date (YYYY-MM-DD)")
     age_group_young = models.IntegerField(default = 0, verbose_name="Youngest Age") #flag year of birth
     age_group_old = models.IntegerField(default = 20, verbose_name="Oldest Age") #flag year of birth
     reg_start = models.DateTimeField(default = datetime.datetime.now(tz=timezone.utc), verbose_name="Registration Start Time")  #set up when registration is open
