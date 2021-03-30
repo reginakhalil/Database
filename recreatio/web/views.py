@@ -4,7 +4,6 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .models import Post
 
 
-
 def home(request):
     context = {
         'posts': Post.objects.all()

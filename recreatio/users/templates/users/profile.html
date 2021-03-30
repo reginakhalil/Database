@@ -9,6 +9,7 @@
         </div>
         <div class ="form=group">
             <button class="btn btn-outline-info" onclick="location.href={% url 'profile_update' %}">Update My Profile</button>
+            <button class="btn btn-outline-info" onclick="location.href={% url 'my_organizations' %}">Manage My Organizations</button>
         </div>
     </div>
     <div class "content-section">
@@ -17,8 +18,9 @@
         </div>
         <div>
             {% for parent in parents %}
-                <h4>{{parent.first_name}} {{parent.last_name}}</h4>            
-            {% endfor%}
+                <h6>{{parent.first_name}} {{parent.last_name}}  <button class="btn btn-outline-info" /
+                    onclick='location.href="update_children/{{parent.id }}";'>Update Child Info</button>            </h6>
+                {% endfor%}
         </div>
 
         <div class ="form=group">
@@ -26,16 +28,5 @@
         </div>
 
     </div>
-    <div class "content-section">
-        <div class"media-body>
-            <h2 class = "account-heading">My Organizations</h2> 
-        </div>
-      
-        <div class ="form=group">
-            <button class="btn btn-outline-info" onclick="location.href={% url 'add_organization' %}">Add Organization</button>
-        </div>
-   
-    </div>
-
 
 {% endblock content %}

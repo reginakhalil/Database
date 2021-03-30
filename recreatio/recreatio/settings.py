@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'web.apps.WebConfig',
     'website.apps.WebsiteConfig',
     'crispy_forms',
+    'django_tables2',
+    'django_filters',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

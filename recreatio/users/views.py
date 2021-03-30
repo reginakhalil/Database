@@ -2,8 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, AddChildForm, AddOrgForm
-from .models import Child, Profile, Organization
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, AddChildForm, AddOrgForm, UpdateChildForm, ManageOrgForm, OrgAddActivites
+from .models import Child, Profile, Organization, Activities
+from .tables import ActivityTable
+from django_tables2 import RequestConfig
+from .filters import ActivityFilter, ActivityFilterGeneric
 
 def register(request):
     if request.method == "POST":
@@ -20,10 +23,12 @@ def register(request):
 @login_required
 def profile(request):
 
-    parent = request.user   #extract the current user
+    parent = request.user   #extract the current user, can use this for multiple lookups
+
     parent_id = Profile.objects.get(user_id = parent.id)    #go to the profile objects and find ID
     parents = Child.objects.filter(parent__id = parent_id.id).order_by('first_name')   #use this ID to find my children
     
+    org = Organization.objects.filter(leaders__id = parent_id.id).order_by('name')
 
     if request.method == "POST":
         update_form = UserUpdateForm(request.POST, instance=request.user)
@@ -37,7 +42,8 @@ def profile(request):
         profile_update_form = UserUpdateForm(instance=request.user)
     context = {
         'profile_update_form': profile_update_form,
-        'parents': parents
+        'parents': parents,
+        'org': org
     }
 
     return render(request, 'users/profile.html',context)
@@ -73,13 +79,44 @@ def add_children(request):
 
     return render(request, 'users/add_children.html',context)
 
+def update_children(request, id):
+    #capture the current child object
+    obj = Child.objects.get(id=id)
+
+    if request.method == "POST":
+        update_children_form = UpdateChildForm(request.POST, instance = obj)
+        if update_children_form.is_valid():# and profile_form.is_valid():
+            new_child = update_children_form.save()
+            messages.success(request, f"Child account updated")
+            return redirect('profile')
+    else:
+        update_children_form = UpdateChildForm(instance = obj)
+
+    context = {
+        'update_children_form': update_children_form,
+    }
+
+    return render(request, 'users/update_children.html',context)
+
+def my_organizations(request):
+    profile = request.user   #extract the current user, can use this for multiple lookups
+    profile_id = Profile.objects.get(user_id = profile.id)    #go to the profile objects and find ID
+    org = Organization.objects.filter(leaders__id = profile_id.id).order_by('name')
+
+    context = {
+        'org': org
+    }
+
+    return render(request, 'users/my_organizations.html', context)
+
+
 def add_organization(request):
     if request.method == "POST":
         add_org_form = AddOrgForm(request.POST)
         if add_org_form.is_valid():# and profile_form.is_valid():
             new_child = add_org_form.save()
-            messages.success(request, f"Account updated")
-            return redirect('profile')
+            messages.success(request, f"Organization Added")
+            return redirect('my_organizations')
     else:
         add_org_form = AddOrgForm()
     
@@ -88,3 +125,87 @@ def add_organization(request):
     }
 
     return render(request, 'users/add_organization.html',context)
+
+def manage_organization(request, id):
+    obj = Organization.objects.get(id=id)
+
+    if request.method == "POST":
+        manage_org_form = ManageOrgForm(request.POST, instance = obj)
+        if manage_org_form.is_valid():# and profile_form.is_valid():
+            new_child = manage_org_form.save()
+            messages.success(request, f"Organization Updated")
+            return redirect('my_organizations')
+    else:
+        manage_org_form = ManageOrgForm(instance = obj)
+    
+    context = {
+        'manage_org_form': manage_org_form,
+        'obj': obj
+    }
+
+    return render(request, 'users/manage_organization.html',context)
+
+def org_add_activities(request, id):
+    obj = Organization.objects.get(id=id)
+
+    if request.method == "POST":
+        org_add_activities = OrgAddActivites(request.POST,instance = obj)
+        if org_add_activities.is_valid():
+            print("adding activity")
+            org_add_activities.save()
+            messages.success(request, f"Activity Added")
+            return redirect('my_organizations')
+    else:
+        org_add_activities = OrgAddActivites(instance = obj)
+
+    context = {
+        'org_add_activities': org_add_activities,
+        'obj': obj
+    }
+
+    return render(request, 'users/org_add_activities.html',context)
+
+def org_view_activities(request, id):
+    obj = Organization.objects.get(id=id)
+    
+    activities = Activities.objects.filter(organization__id = id)
+    activities = activities.order_by("start_date")
+
+    myFilter = ActivityFilter(request.GET, queryset=activities)
+    activities = myFilter.qs
+
+    table = ActivityTable(activities)
+    table.columns["age_group_young"].header 
+    'Young'
+    RequestConfig(request).configure(table)
+
+    
+
+    context = {
+        'obj': obj,
+        'activities': activities,
+        'table': table,
+        'myFilter': myFilter,
+    }
+
+    return render(request, 'users/org_view_activities.html',context)
+
+def sample_search(request):
+    
+    activities = Activities.objects.all()
+    activities = activities.order_by("start_date")
+
+    myFilter = ActivityFilterGeneric(request.GET, queryset=activities)
+    activities = myFilter.qs
+
+    table = ActivityTable(activities)
+    RequestConfig(request).configure(table)
+
+    context = {
+        'activities': activities,
+        'table': table,
+        'myFilter': myFilter,
+    }
+
+    return render(request, 'users/sample_search.html',context)
+

@@ -1,0 +1,31 @@
+{% extends "web/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class "content-section">
+        <div class"media-body>
+            <h2 class = "account-heading">{{ user.first_name }} {{ user.last_name }}</h2> 
+        </div>
+        <div class ="form=group">
+            <button class="btn btn-outline-info" onclick="location.href={% url 'add_organization' %}">Add An Organization</button>
+        </div>
+    </div>
+    <div class "content-section">
+        <div class"media-body>
+            <h2 class = "account-heading">My Organizations</h2> 
+            {% for organization in org %}
+                <h4>{{organization.name}} {{organization.city}} </h4>  
+                <h4><button class="btn btn-outline-info" /
+                    onclick='location.href="manage_organization/{{organization.id }}";'> Manage My Organization</button> 
+                    <button class="btn btn-outline-info" /
+                    onclick='location.href="org_add_activities/{{organization.id }}";'> Add an Activity</button> 
+                    <button class="btn btn-outline-info" /
+                    onclick='location.href="org_view_activities/{{organization.id }}";'> View Activities</button> 
+               
+                </h4>
+            {% endfor%}
+        
+        </div>
+    </div>
+
+
+{% endblock content %}

@@ -22,6 +22,7 @@ from users import views as user_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('proj/', include('website.urls')),
+    path("sample_search/",user_views.sample_search, name="sample_search"),
     path('', include('web.urls')),
     path("register/", user_views.register, name="register"),
     path("login/", auth_views.LoginView.as_view(template_name='users/login.html'), name="login"),
@@ -29,5 +30,10 @@ urlpatterns = [
     path("profile/", user_views.profile, name="profile"), 
     path("profile_update/", user_views.profile_update, name="profile_update"),    
     path("add_children/",user_views.add_children, name="add_children"),
-    path("add_organization/",user_views.add_organization, name="add_organization")
-]
+    path("add_organization/",user_views.add_organization, name="add_organization"),
+    path("my_organizations/",user_views.my_organizations, name="my_organizations"),
+    path("my_organizations/manage_organization/<int:id>",user_views.manage_organization, name="manage_organization"),
+    path("my_organizations/org_add_activities/<int:id>",user_views.org_add_activities, name="org_add_activities"),
+    path("my_organizations/org_view_activities/<int:id>",user_views.org_view_activities, name="org_view_activities"),
+    path("profile/update_children/<int:id>/",user_views.update_children, name="update_children"),
+    ]
