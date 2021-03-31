@@ -3,16 +3,18 @@
   <body>
     <article class="media content-section">
     <div class="media-body">
-        <h2>Registered Children</h2>
-    <div>
-      <ol>
-      {% for child in children %}
-      
-        <li>{{child.first_name}} {{child.last_name}}</li>
+        <div class="article-metadata">
+            <h2>Registered Children</h2>
+            <div>
+                <ol>
+                {% for child in children %}
+        
+                    <li>{{child.first_name}} {{child.last_name}} <a class= "btn btn-secondary btn-sm mt-1 mb-1" href = "{% url 'parent-info' child.id %}">View Parent Info</a></li>
 
-      {% endfor%}
-    </ol>
-    </div>
+                {% endfor%}
+                </ol> 
+            </div>  
+        </div> 
     </div>
     </article>
     </body>

@@ -1,0 +1,16 @@
+{% extends "web/base.html" %}
+{% block content %}
+
+<body>
+    <article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <h2 class = "account-heading">{{ parent.first_name }} {{ parent.last_name }}</h2> 
+            <p class="text-secondary">{{ parent.username }}</p>
+            <p class="text-secondary">{{ parent.email }}</p>
+        </div> 
+    </div>
+    </article>
+</body>
+
+{% endblock content %}

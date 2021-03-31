@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
@@ -270,3 +271,14 @@ def enrolled_children(request, pk):
     }
 
     return render(request, 'users/activities_detail_registered.html', context)
+
+def parent_info(request, id):
+    profile = Profile.objects.get(child__id = id)
+    parent = Profile.objects.get(user__id = profile.user_id)
+    user = User.objects.get(id = parent.user_id)
+    print(parent)
+    context = {
+        'parent': user
+    }
+
+    return render(request, 'users/parent_info.html', context)
