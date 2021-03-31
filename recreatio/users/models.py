@@ -27,8 +27,8 @@ class Activities(models.Model):
     end_date = models.DateField(verbose_name="End Date (YYYY-MM-DD)")
     age_group_young = models.IntegerField(default = 0, verbose_name="Youngest Age") #flag year of birth
     age_group_old = models.IntegerField(default = 20, verbose_name="Oldest Age") #flag year of birth
-    reg_start = models.DateTimeField(default = datetime.datetime.now(tz=timezone.utc), verbose_name="Registration Start Time")  #set up when registration is open
-    reg_end = models.DateTimeField(default = datetime.datetime.now(tz=timezone.utc), verbose_name="Registration End Time")    #set up when registration is closed
+    reg_start = models.DateField(verbose_name="Registration Start Date (YYYY-MM-DD)")  #set up when registration is open
+    reg_end = models.DateField(verbose_name="Registration End Date (YYYY-MM-DD)")   #set up when registration is closed
     max_size = models.IntegerField(default = 0, verbose_name="Registration Maximum")    #set up the size of a class
     description = models.CharField(max_length=300)
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)

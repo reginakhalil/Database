@@ -66,15 +66,15 @@ class OrgAddActivites(forms.ModelForm):
             'max_size': forms.Select(choices=GROUP_RANGE),
             'start_date': forms.NumberInput(attrs={'type':'date'}),
             'end_date': forms.NumberInput(attrs={'type':'date'}),
-            'reg_start': MinimalSplitDateTimeMultiWidget(),
-            'reg_end': MinimalSplitDateTimeMultiWidget(),
+            'reg_start': forms.NumberInput(attrs={'type':'date'}),
+            'reg_end': forms.NumberInput(attrs={'type':'date'}),
         }
         labels = {
             'start_date': "Activity starting date", 
             'end_date': "Activity ending date",
             'age_group_young': "Younges age eligible for activity",
             'age_group_old': 'Oldest age eligible for activity',
-            'reg_start': "Registration staring date and time",
-            'reg_end': "Registration closing date and time", 
+            'reg_start': "Registration starting date",
+            'reg_end': "Registration closing date", 
             'max_size': "Maximum number of registrants in the activity"
         }
