@@ -42,5 +42,5 @@ urlpatterns = [
     path('activity/new/', ActivityCreateView.as_view(), name='activity-create'),
     path('activity/<int:pk>/update/', ActivityUpdateView.as_view(), name='activity-update'),
     path('activity/<int:pk>/delete/', ActivityDeleteView.as_view(), name='activity-delete'),
-
+    path('activity/<int:pk>/registered/', user_views.enrolled_children, name='activity-registered'),
     ]

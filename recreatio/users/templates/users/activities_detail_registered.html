@@ -1,0 +1,15 @@
+{% extends "web/base.html" %}
+{% block content %}
+  <body>
+    <article class="media content-section">
+    <div class="media-body">
+        <h2>Registered Children</h2>
+    <div>
+      {% for child in children %}
+      <h6>{{child.first_name}} {{child.last_name}}</h6>
+      {% endfor%}
+    </div>
+    </div>
+    </article>
+    </body>
+{% endblock content %}

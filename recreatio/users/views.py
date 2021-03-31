@@ -261,3 +261,12 @@ def sample_search(request):
 
     return render(request, 'users/sample_search.html',context)
 
+def enrolled_children(request, pk):
+    children = Child.objects.filter(activities__id = pk)
+    children = children.order_by("first_name")
+
+    context = {
+        'children': children
+    }
+
+    return render(request, 'users/activities_detail_registered.html', context)
