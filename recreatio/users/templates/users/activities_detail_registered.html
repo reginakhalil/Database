@@ -5,9 +5,13 @@
     <div class="media-body">
         <h2>Registered Children</h2>
     <div>
+      <ol>
       {% for child in children %}
-      <h6>{{child.first_name}} {{child.last_name}}</h6>
+      
+        <li>{{child.first_name}} {{child.last_name}}</li>
+
       {% endfor%}
+    </ol>
     </div>
     </div>
     </article>
