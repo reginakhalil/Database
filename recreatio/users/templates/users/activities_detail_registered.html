@@ -6,16 +6,26 @@
         <div class="article-metadata">
             <h2>Registered Children</h2>
             <div>
-                <ol>
+              <table style="width: 100%">
+              <ol>
                 {% for child in children %}
-        
-                    <li>{{child.first_name}} {{child.last_name}} <a class= "btn btn-secondary btn-sm mt-1 mb-1" href = "{% url 'parent-info' child.id %}">View Parent Info</a></li>
-
+                  <tr>
+                    
+                    <td>
+                      <li>{{child.first_name}} {{child.last_name}}</li>
+                    </td>
+                    <td>
+                      <a class= "btn btn-secondary btn-sm mt-1 mb-1" href = "{% url 'parent-info' child.id %}">View Parent Info</a>
+                    </td>
+                  </tr>
+                
                 {% endfor%}
                 </ol> 
-            </div>  
+            </div> 
+          </table> 
         </div> 
     </div>
     </article>
     </body>
 {% endblock content %}
+
