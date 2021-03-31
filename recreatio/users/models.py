@@ -20,16 +20,7 @@ class Organization(models.Model):
     def __str__(self):
         return self.name
 
-class Child(models.Model):
-    first_name = models.CharField(max_length=20)
-    last_name = models.CharField(max_length=30)
-    birth_date = models.DateField()
-    parent = models.ManyToManyField(Profile)
-#    activity_list = models.ManyToManyField(Activities)
-# list of their acvities
 
-    def __str__(self):
-        return self.first_name + " " + self.last_name
 
 class Activities(models.Model):
     start_date = models.DateField(verbose_name="Start Date (YYYY-MM-DD)")
@@ -41,7 +32,6 @@ class Activities(models.Model):
     max_size = models.IntegerField(default = 0, verbose_name="Registration Maximum")    #set up the size of a class
     description = models.CharField(max_length=300)
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
-    registrant = models.ManyToManyField(Child, blank=True)
 
     title = models.CharField(max_length = 100)
     date_posted = models.DateTimeField(default=timezone.now)
@@ -53,6 +43,15 @@ class Activities(models.Model):
     def get_absolute_url(self): 
         return reverse('activity-detail', kwargs={'pk': self.pk})
     
+class Child(models.Model):
+    first_name = models.CharField(max_length=20)
+    last_name = models.CharField(max_length=30)
+    birth_date = models.DateField()
+    parent = models.ManyToManyField(Profile)
+    activities = models.ManyToManyField(Activities)
+# list of their acvities
 
+    def __str__(self):
+        return self.first_name + " " + self.last_name
 
 
