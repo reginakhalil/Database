@@ -276,9 +276,12 @@ def parent_info(request, id):
     profile = Profile.objects.get(child__id = id)
     parent = Profile.objects.get(user__id = profile.user_id)
     user = User.objects.get(id = parent.user_id)
-    print(parent)
+
+    children = Child.objects.filter(parent__id = parent.id).order_by('first_name')
+    
     context = {
-        'parent': user
+        'parent': user,
+        'children': children
     }
 
     return render(request, 'users/parent_info.html', context)
