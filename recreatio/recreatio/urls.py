@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from users import views as user_views
-from users.views import ActivityListView, ActivityDetailView, ActivityCreateView, ActivityUpdateView, ActivityDeleteView
+from users.views import ActivityListView, ActivityDetailView, ActivityCreateView, ActivityUpdateView, ActivityDeleteView, CalendarView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -44,4 +44,7 @@ urlpatterns = [
     path('activity/<int:pk>/delete/', ActivityDeleteView.as_view(), name='activity-delete'),
     path('activity/<int:pk>/registered/', user_views.enrolled_children, name='activity-registered'),
     path('activity/parent/<int:id>/', user_views.parent_info, name='parent-info'),
+
+    path('calendar/', CalendarView.as_view(), name='calendar'),
+    
     ]
