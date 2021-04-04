@@ -10,6 +10,9 @@ from django_tables2 import RequestConfig
 from .filters import ActivityFilter, ActivityFilterGeneric
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from .utils import Calendar
+from django.utils.safestring import mark_safe
+from datetime import datetime
 
 def home(request): 
     context = {
@@ -60,6 +63,39 @@ class ActivityDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         activity = self.get_object()
         #check if the user currenlty logged in is the author of the post
         return self.request.user == activity.author
+
+class CalendarView(ListView):
+    model = Activities
+    template_name = 'users/calendar.html'
+    # success_url = reverse_lazy("calendar")
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # use today's date for the calendar
+        d = get_date(self.request.GET.get('day', None))
+
+        # Instantiate our calendar class with today's year and date
+        cal = Calendar(d.year, d.month)
+
+        # Call the formatmonth method, which returns our calendar as a table
+        html_cal = cal.formatmonth(withyear=True)
+        context['calendar'] = mark_safe(html_cal)
+        return context
+
+def get_date(req_day):
+    if req_day:
+        year, month = (int(x) for x in req_day.split('-'))
+        return date(year, month, day=1)
+    return datetime.today()
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     # d = get_date(self.request.GET.get('month', None))
+    #     cal = Calendar(2000, 1)
+    #     html_cal = cal.formatmonth(withyear=True)
+    #     context['calendar'] = mark_safe(html_cal)
+    #     context['prev_month'] = prev_month("")
+    #     context['next_month'] = next_month("")
+    #     return context
 
 def register(request):
     if request.method == "POST":
@@ -285,3 +321,5 @@ def parent_info(request, id):
     }
 
     return render(request, 'users/parent_info.html', context)
+
+
