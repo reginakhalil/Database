@@ -19,6 +19,8 @@ from django.urls import path, include
 from users import views as user_views
 from users.views import ActivityListView, ActivityDetailView, ActivityCreateView, ActivityUpdateView, ActivityDeleteView
 
+app_name = 'calendarapp'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('proj/', include('website.urls')),
@@ -44,4 +46,15 @@ urlpatterns = [
     path('activity/<int:pk>/delete/', ActivityDeleteView.as_view(), name='activity-delete'),
     path('activity/<int:pk>/registered/', user_views.enrolled_children, name='activity-registered'),
     path('activity/parent/<int:id>/', user_views.parent_info, name='parent-info'),
+
+
+    #path('index', views.index, name='index'),
+    path('', user_views.CalendarView.as_view(), name='calendar'),
+    path('event/new/', user_views.create_event, name='event_new'),
+    path('event/edit/<int:pk>/', user_views.EventEdit.as_view(), name='event_edit'),
+    path('event/<int:event_id>/details/', user_views.event_details, name='event-detail'),
+    path('add_eventmember/<int:event_id>', user_views.add_eventmember, name='add_eventmember'),
+    path('event/<int:pk>/remove', user_views.EventMemberDeleteView.as_view(), name="remove_event"),
+
+
     ]

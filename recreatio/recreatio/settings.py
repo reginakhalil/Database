@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'eventcalendar.urls',
     'users.apps.UsersConfig',
     'web.apps.WebConfig',
     'website.apps.WebsiteConfig',
