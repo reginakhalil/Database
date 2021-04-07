@@ -17,11 +17,12 @@
 
             
             {% for child, activity in children_activities %}
-            <tr>
-                <td>
-                    {{child.first_name}} {{child.last_name}}
-                </td>
+            
                     {% for item in activity %}
+                    <tr>
+                        <td>
+                            {{child.first_name}} {{child.last_name}}
+                        </td>
                         <td>
                         {{item.title}} 
                         </td>
@@ -29,11 +30,12 @@
                         <td>
                             {{item.start_date}} 
                         </td>
+                    </tr>
                     {% endfor%}
     
          
             {% endfor%}
-            </tr>
+            
         </table>
 
     </div>
