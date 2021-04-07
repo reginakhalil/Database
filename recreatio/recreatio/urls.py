@@ -44,4 +44,6 @@ urlpatterns = [
     path('activity/<int:pk>/delete/', ActivityDeleteView.as_view(), name='activity-delete'),
     path('activity/<int:pk>/registered/', user_views.enrolled_children, name='activity-registered'),
     path('activity/parent/<int:id>/', user_views.parent_info, name='parent-info'),
+
+    path('upcoming/', user_views.upcoming_activities, name='upcoming'),
     ]

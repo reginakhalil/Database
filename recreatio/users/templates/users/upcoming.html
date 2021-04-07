@@ -1,0 +1,43 @@
+{% extends "web/base.html" %}
+{% block content %}
+
+<body>
+    <article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <h3 class = "account-heading">Upcoming Events</h3>
+        </div>
+        <br>
+        <table>
+            <tr>
+                <th>Participant</th>
+                <th>Activity</th>
+                <th>Start Date</th>
+            </tr>
+
+            
+            {% for child, activity in children_activities %}
+            <tr>
+                <td>
+                    {{child.first_name}} {{child.last_name}}
+                </td>
+                    {% for item in activity %}
+                        <td>
+                        {{item.title}} 
+                        </td>
+
+                        <td>
+                            {{item.start_date}} 
+                        </td>
+                    {% endfor%}
+    
+         
+            {% endfor%}
+            </tr>
+        </table>
+
+    </div>
+    </article>
+</body>
+
+{% endblock content %}

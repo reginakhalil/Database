@@ -285,3 +285,39 @@ def parent_info(request, id):
     }
 
     return render(request, 'users/parent_info.html', context)
+
+
+def upcoming_activities(request):
+
+    profile = request.user
+    profile_id = Profile.objects.get(user_id = profile.id) 
+
+    children = Child.objects.filter(parent__id = profile_id.id)
+
+    children_activities = []
+
+   
+
+    activities = []
+    for child in children: 
+        activities.append(Activities.objects.filter(child__id = child.id).order_by("start_date"))
+
+
+    activities = list(dict.fromkeys(activities))
+
+    for i in range(len(children)): 
+        children_activities.append([children[i], activities[i]])
+
+
+    context = {
+        'children_activities': children_activities,
+    }
+
+    return render(request, 'users/upcoming.html', context)
+
+
+
+
+
+
+    
