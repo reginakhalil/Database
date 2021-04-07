@@ -8,6 +8,12 @@
             <h3 class = "account-heading">Upcoming Events</h3>
         </div>
         <br>
+
+
+        {% load django_tables2%}
+        {% render_table table %}
+
+
         <table>
             <tr>
                 <th>Participant</th>

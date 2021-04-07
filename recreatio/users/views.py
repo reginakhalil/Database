@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, AddChildForm, AddOrgForm, UpdateChildForm, ManageOrgForm, OrgAddActivites
 from .models import Child, Profile, Organization, Activities
-from .tables import ActivityTable
+from .tables import ActivityTable, SimpleActivityTable
 from django_tables2 import RequestConfig
 from .filters import ActivityFilter, ActivityFilterGeneric
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -296,7 +296,14 @@ def upcoming_activities(request):
 
     children_activities = []
 
-   
+    activities = Activities.objects.filter(child__in = children)
+    activities = activities.order_by("start_date")
+
+    myFilter = ActivityFilterGeneric(request.GET, queryset=activities)
+    activities = myFilter.qs
+    table = SimpleActivityTable(activities)
+    RequestConfig(request).configure(table)
+
 
     activities = []
     for child in children: 
@@ -311,13 +318,11 @@ def upcoming_activities(request):
 
     context = {
         'children_activities': children_activities,
+        'activities': activities,
+        'table': table,
+        'myFilter': myFilter,
+    
     }
 
     return render(request, 'users/upcoming.html', context)
 
-
-
-
-
-
-    
