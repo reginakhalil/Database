@@ -58,6 +58,7 @@
           {% endif %}
           {% block content %}{% endblock %}
         </div>
+        {% if user.is_authenticated%}
         <div class="col-md-4">
           <div class="content-section">
             <h3>Upcoming Events</h3>
@@ -75,6 +76,7 @@
             </p>
           </div>
         </div>
+        {% endif %}
       </div>
     </main>
 
