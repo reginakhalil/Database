@@ -36,7 +36,7 @@ class ProfileUpdateForm(forms.ModelForm):
 class AddChildForm(forms.ModelForm):
     class Meta:
         model = Child
-        fields = ['first_name', 'last_name','birth_date','parent', 'activities']
+        fields = ['first_name', 'last_name','birth_date','parent']
         widgets = {'birth_date': forms.NumberInput(attrs={'type':'date'})}
 
 class UpdateChildForm(forms.ModelForm):
