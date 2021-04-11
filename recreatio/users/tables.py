@@ -10,5 +10,5 @@ class ActivityTable(tables.Table):
     class Meta:
         model = Activities
         sequence = ('start_date', 'end_date', 'reg_start')
-        exclude = ['organization', 'id','registrant', 'description']
+        exclude = ['organization', 'id','registrant', 'description',"author","date_posted"]
       

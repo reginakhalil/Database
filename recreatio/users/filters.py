@@ -9,7 +9,7 @@ class ActivityFilter(django_filters.FilterSet):
     class Meta:
         model = Activities
         fields = "__all__"
-        exclude = ["age_group_young", "age_group_old","organization","registrant", "description" ]
+        exclude = ["age_group_young", "age_group_old","organization","registrant", "description", "author", "date_posted", "end_date", "title","max_size"]
 
 class ActivityFilterGeneric(django_filters.FilterSet):
     child_age_young = NumberFilter(field_name='age_group_young', lookup_expr="lte", label="Activities this age and up")
@@ -18,5 +18,5 @@ class ActivityFilterGeneric(django_filters.FilterSet):
     class Meta:
         model = Activities
         fields = "__all__"
-        exclude = ["age_group_young", "age_group_old","organization","registrant", "description", "max_size", "reg_start", "reg_end" ]
+        exclude = ["age_group_young", "age_group_old","organization","registrant", "description", "max_size", "reg_start", "reg_end", "title", "author", "date_posted" ]
         
