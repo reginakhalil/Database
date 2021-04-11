@@ -296,8 +296,6 @@ def upcoming_activities(request):
 
     children_activities = []
 
-   
-
     activities = []
     for child in children: 
         activities.append(Activities.objects.filter(child__id = child.id).order_by("start_date"))

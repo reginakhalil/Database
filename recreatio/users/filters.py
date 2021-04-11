@@ -18,5 +18,5 @@ class ActivityFilterGeneric(django_filters.FilterSet):
     class Meta:
         model = Activities
         fields = "__all__"
-        exclude = ["age_group_young", "age_group_old","organization","registrant", "description", "max_size", "reg_start", "reg_end" ]
+        exclude = ["age_group_young", "age_group_old","organization","registrant", "description", "max_size", "reg_start", "reg_end", "author", "title", "date_posted"]
         
